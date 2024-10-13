@@ -3,6 +3,7 @@ import {
     signInWithPopup,
     UserCredential,
     signOut,
+    signInWithRedirect,
 } from 'firebase/auth';
 import { auth } from "./firebase";
 

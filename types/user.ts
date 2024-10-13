@@ -4,4 +4,5 @@ export type User = {
   address: string;
   icon: string;
   instant: string;
+  message: string;
 };

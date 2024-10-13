@@ -36,6 +36,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
                         address: firebaseUser.email!,
                         icon: firebaseUser.photoURL!,
                         instant: "よろしく",
+                        message: "よかったら話しませんか?",
                     };
 
                     setDoc(ref, appUser).then(() => {

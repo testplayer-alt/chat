@@ -3,6 +3,7 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { collection, doc, getDoc, getDocs, getFirestore, query, setDoc, where } from 'firebase/firestore';
 import { useEffect, useState } from "react";
 import Split from "react-split";
+import { User } from "../../types/user";
 
 
 
@@ -134,7 +135,7 @@ export default function Match() {
                         <p className="text-[1.5rem] text-center font-bold mt-2 border-b-2 ">最近ログインしたユーザー</p>
                         <ScrollArea className="h-[83vh] w-full">
                             <div className="block w-full mt-2">
-                                {userlist.map((user: any) => (
+                                {userlist.map((user: User) => (
                                     <div className=" text-center flex w-[30rem] m-auto p-2 border-2 mb-1">
                                         <img className="rounded-full w-[3.5rem] h-auto" src={user.icon} alt="アイコン" />
                                         <div className="block mt-[0.2rem]">

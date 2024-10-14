@@ -2,60 +2,67 @@ import { useAuth } from "../../context/auth";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Button } from "@/components/ui/button";
 import { useEffect, useState } from "react";
-import { collection, doc, getDocs, getDoc, getFirestore, query, where } from 'firebase/firestore';
+import { collection, doc, getDoc, getFirestore, query, where, onSnapshot } from 'firebase/firestore'; // onSnapshotをインポート
 import { inchat } from "./massage";
 
 const List = () => {
     const user = useAuth();
-    const [chatlist, Setchatlist] = useState<any>([]);
-    const [userNames, setUserNames] = useState<any[]>([]); // 他のユーザー名を保存するステート
+    const [sortedChatData, setSortedChatData] = useState<any[]>([]);
     const [loading, setLoading] = useState<boolean>(true);
     const db = getFirestore();
     const chatCollectionRef = collection(db, 'chat');
     const usersCollectionRef = collection(db, 'users');
 
     useEffect(() => {
-        const fetchData = async () => {
-            if (!user) return;
+        if (!user) return;
 
-            try {
-                setLoading(true); // ローディングを開始
+        setLoading(true); // ローディングを開始
 
-                // `user.id` を含むチャットルームを取得
-                const q = query(chatCollectionRef, where("userIds", "array-contains", user.id));
-                const contentsSnapshot = await getDocs(q);
+        // 現在のユーザーIDを含むチャットルームをリアルタイムで取得
+        const q = query(chatCollectionRef, where("userIds", "array-contains", user.id));
 
-                if (!contentsSnapshot.empty) {
-                    // チャットルームのデータを保存
-                    const rooms = contentsSnapshot.docs.map(doc => doc.data());
-                    Setchatlist(rooms);
+        const unsubscribe = onSnapshot(q, async (contentsSnapshot) => {
+            if (!contentsSnapshot.empty) {
+                const rooms = contentsSnapshot.docs.map(doc => doc.data());
 
-                    // 他のユーザーのIDを取得
-                    const otherUserIds = rooms.map(room => room.userIds.find((id: string) => id !== user.id));
+                const otherUserIds = rooms.map(room => {
+                    return room.userIds.find((id: string) => id !== user.id);
+                });
 
-                    // 他のユーザーIDに対応するユーザー名を取得
-                    const userPromises = otherUserIds.map(async (otherUserId: string) => {
-                        const userDoc = await getDoc(doc(usersCollectionRef, otherUserId));
-                        return userDoc.exists() ? userDoc.data()?.name : "Unknown User"; // ユーザードキュメントが存在すれば名前を取得
-                    });
+                const userPromises = otherUserIds.map(async (otherUserId: string) => {
+                    const userDoc = await getDoc(doc(usersCollectionRef, otherUserId));
+                    return userDoc.exists() ? userDoc.data()?.name : "Unknown User";
+                });
 
-                    // 取得したユーザー名をセット
-                    const userNamesArray = await Promise.all(userPromises);
-                    setUserNames(userNamesArray);
+                const userNamesArray = await Promise.all(userPromises);
 
-                } else {
-                    setUserNames([]); // データがない場合は空の配列を設定
-                }
+                // チャットルームを最後のメッセージのタイムスタンプで並び替え
+                const sortedData = rooms
+                    .map((room, index) => {
+                        const lastMessage = room.talk && room.talk.length > 0 ? room.talk[room.talk.length - 1] : null;
+                        const lastMessageTime = lastMessage && lastMessage.timestamp && lastMessage.timestamp.seconds
+                            ? new Date(lastMessage.timestamp.seconds * 1000)
+                            : new Date(0);
 
-            } catch (error) {
-                console.error("データ取得中のエラー: ", error);
-            } finally {
-                setLoading(false); // ローディング終了
+                        return {
+                            room,
+                            userName: userNamesArray[index],
+                            lastMessageTime
+                        };
+                    })
+                    .sort((a, b) => b.lastMessageTime.getTime() - a.lastMessageTime.getTime());
+
+                setSortedChatData(sortedData); // 並べ替えたデータをステートに保存
+            } else {
+                setSortedChatData([]); // データがない場合は空の配列を設定
             }
-        };
 
-        fetchData();
-    }, [user]);
+            setLoading(false); // ローディングを終了
+        });
+
+        // コンポーネントのアンマウント時にリアルタイムリスナーを解除
+        return () => unsubscribe();
+    }, [user, db]);
 
     return (
         <div className="bg-[#000000] p-2 w-full">
@@ -65,11 +72,14 @@ const List = () => {
             ) : (
                 <ScrollArea className="h-[83vh] w-full">
                     <div className="block w-full border-t-2">
-                        {userNames.length > 0 ? (
-                            chatlist.map((room: any, index: any) => (
-                                <Button onClick={() => inchat(room, userNames[index])} key={room.id} className="w-full rounded-none border-b-2 h-[4rem] bg-black hover:bg-[#5d5d5d]">
+                        {sortedChatData.length > 0 ? (
+                            sortedChatData.map(({ room, userName }, index) => (
+                                <Button
+                                    onClick={() => inchat(room, userName)} // room と userName を正しく渡す
+                                    key={room.roomname}
+                                    className="w-full rounded-none border-b-2 h-[4rem] bg-black hover:bg-[#5d5d5d]">
                                     <div className="text-sm">
-                                        {userNames[index]} {/* 他のユーザーの名前を表示 */}
+                                        {userName} {/* 他のユーザーの名前を表示 */}
                                     </div>
                                 </Button>
                             ))

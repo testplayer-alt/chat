@@ -88,7 +88,11 @@ export default function Match() {
                     console.log("ルームを作成");
                     // ルーム作成
                     await setDoc(doc(chatref, roomname), {
-                        talk: [{ id: user?.id, message: "こんにちは" }], // talk配列に要素を追加
+                        talk: [{
+                            id: user?.id,
+                            message: "こんにちは",
+                            timestamp: new Date(), // タイムスタンプを追加
+                        }], // talk配列に要素を追加
                         roomname: roomname, // ルーム名をデータとして保存
                         userIds: [user?.id, params] // 関連ユーザーのIDを保存
                     });
@@ -107,7 +111,11 @@ export default function Match() {
                     console.log("ルームを作成");
                     // ルーム作成
                     await setDoc(doc(chatref, roomname), {
-                        talk: [{ id: user?.id, message: "こんにちは" }], // talk配列に要素を追加
+                        talk: [{
+                            id: user?.id,
+                            message: "こんにちは",
+                            timestamp: new Date(), // タイムスタンプを追加
+                        }], // talk配列に要素を追加
                         roomname: roomname, // ルーム名をデータとして保存
                         userIds: [user?.id, params] // 関連ユーザーのIDを保存
                     });

@@ -1,11 +1,9 @@
-import Split from "react-split";
-import { ScrollArea } from "@/components/ui/scroll-area";
 import { Button } from "@/components/ui/button";
+import { ScrollArea } from "@/components/ui/scroll-area";
 import { Textarea } from "@/components/ui/textarea";
+import { arrayUnion, doc, getFirestore, onSnapshot, updateDoc } from 'firebase/firestore'; // onSnapshotをインポート
 import { useEffect, useState } from "react";
-import { collection, doc, getFirestore, onSnapshot } from 'firebase/firestore'; // onSnapshotをインポート
 import { useAuth } from "../../context/auth";
-import { updateDoc, arrayUnion } from 'firebase/firestore';
 
 let settalk: any; // 外部で使用するために定義
 let setroomname: any;

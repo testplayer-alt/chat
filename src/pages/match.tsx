@@ -1,16 +1,12 @@
-import Split from "react-split";
-import { ScrollArea } from "@/components/ui/scroll-area";
-import { Separator } from "@/components/ui/separator"
 import { Button } from "@/components/ui/button";
-import { Textarea } from "@/components/ui/textarea";
-import { useEffect, useState, useRef } from "react";
-import { arrayUnion, collection, doc, getDocs, getDoc, getFirestore, query, setDoc, updateDoc, where } from 'firebase/firestore';
+import { ScrollArea } from "@/components/ui/scroll-area";
+import { collection, doc, getDoc, getDocs, getFirestore, query, setDoc, where } from 'firebase/firestore';
+import { useEffect, useState } from "react";
+import Split from "react-split";
 
 
 
 import Select from "@/components/select";
-import List from "@/components/massagelist";
-import Message from "@/components/massage";
 import { useRouter } from "next/router";
 import { useAuth } from "../../context/auth";
 

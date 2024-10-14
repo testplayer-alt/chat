@@ -1,23 +1,18 @@
-import Split from "react-split";
-import { ScrollArea } from "@/components/ui/scroll-area";
-import { Separator } from "@/components/ui/separator"
 import { Button } from "@/components/ui/button";
-import { Textarea } from "@/components/ui/textarea";
-import { useEffect, useState, useRef } from "react";
-import { Skeleton } from "@/components/ui/skeleton";
-import { login, logout } from "../../lib/auth";
-import { Input } from "@/components/ui/input"
+import { Input } from "@/components/ui/input";
 import {
     Popover,
     PopoverContent,
     PopoverTrigger,
-} from "@/components/ui/popover"
+} from "@/components/ui/popover";
+import { Textarea } from "@/components/ui/textarea";
+import { useEffect, useRef, useState } from "react";
+import Split from "react-split";
+import { login, logout } from "../../lib/auth";
 
 import Select from "@/components/select";
-import List from "@/components/massagelist";
-import Message from "@/components/massage";
+import { doc, getFirestore, updateDoc } from "firebase/firestore";
 import { useAuth } from "../../context/auth";
-import { doc, updateDoc, getFirestore } from "firebase/firestore";
 
 export default function Account() {
     const user = useAuth();

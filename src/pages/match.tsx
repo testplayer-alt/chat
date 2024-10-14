@@ -90,7 +90,7 @@ export default function Match() {
                     await setDoc(doc(chatref, roomname), {
                         talk: [{
                             id: user?.id,
-                            message: "こんにちは",
+                            message: user?.message,
                             timestamp: new Date(), // タイムスタンプを追加
                         }], // talk配列に要素を追加
                         roomname: roomname, // ルーム名をデータとして保存
@@ -113,7 +113,7 @@ export default function Match() {
                     await setDoc(doc(chatref, roomname), {
                         talk: [{
                             id: user?.id,
-                            message: "こんにちは",
+                            message: user?.message,
                             timestamp: new Date(), // タイムスタンプを追加
                         }], // talk配列に要素を追加
                         roomname: roomname, // ルーム名をデータとして保存

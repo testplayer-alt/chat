@@ -221,57 +221,62 @@ export default function Message() {
                 </ScrollArea>
             )}
 
-            {imageUrl && imageFile ? (
-                <div className="relative">
-                    <div className="border-2 h-[30vh]">
-                        <img
-                            src={imageUrl}
-                            alt="アップロード画像"
-                            className=" object-cover h-[30vh] w-auto m-auto"
-                        />
-                    </div>
-                    <Button className="absolute top-4 right-4 bg-black hover:bg-black" onClick={handleClickCancelButton}>
-                        <svg version="1.1" id="_x32_" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 512 512" style={{ width: '32px', height: '32px', opacity: 1 }} xmlSpace="preserve">
-                            <g>
-                                <polygon className="st0" points="512,52.535 459.467,0.002 256.002,203.462 52.538,0.002 0,52.535 203.47,256.005 0,459.465 
+            {talk.length > 0 ? (
+                <>
+                    {imageUrl && imageFile ? (
+                        <div className="relative">
+                            <div className="border-2 h-[30vh]">
+                                <img
+                                    src={imageUrl}
+                                    alt="アップロード画像"
+                                    className=" object-cover h-[30vh] w-auto m-auto"
+                                />
+                            </div>
+                            <Button className="absolute top-4 right-4 bg-black hover:bg-black" onClick={handleClickCancelButton}>
+                                <svg version="1.1" id="_x32_" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 512 512" style={{ width: '32px', height: '32px', opacity: 1 }} xmlSpace="preserve">
+                                    <g>
+                                        <polygon className="st0" points="512,52.535 459.467,0.002 256.002,203.462 52.538,0.002 0,52.535 203.47,256.005 0,459.465 
 		52.533,511.998 256.002,308.527 459.467,511.998 512,459.475 308.536,256.005" style={{ fill: 'rgb(255, 255, 255)' }}></polygon>
-                            </g>
-                        </svg>
-                    </Button>
-                </div>
+                                    </g>
+                                </svg>
+                            </Button>
+                        </div>
+                    ) : ("")}
+
+                    <div className="border-t-2 h-[12vh] flex">
+                        <Textarea id="textarea" className="text-[#dedede] border-r-2 w-[80%] h-[11.4vh] rounded-none resize-none text-[1.3rem]" placeholder="メッセージを入力..."></Textarea>
+                        <label
+                            className="label"
+                            htmlFor="imageId"
+                            style={{
+                                width: "7vw",
+                                height: "11.4vh",
+                                display: "flex",
+                                justifyContent: "center",
+                                alignItems: "center",
+                                cursor: "pointer",
+                                background: "black",
+                            }}
+                            onMouseEnter={(e) => { e.currentTarget.style.background = '#5d5d5d'; }}
+                            onMouseLeave={(e) => { e.currentTarget.style.background = '#000'; }}
+                        >
+                            <InputImage ref={fileInputRef} id="imageId" onChange={handleFileChange} />
+                            <svg role="img" xmlns="http://www.w3.org/2000/svg" width="48px" height="48px" viewBox="0 0 24 24" stroke="#fff">
+                                <rect width="18" height="18" x="3" y="3" />
+                                <path d="M3 14l4-4 11 11" />
+                                <circle cx="13.5" cy="7.5" r="2.5" />
+                            </svg>
+                        </label>
+
+                        <Button onClick={() => SendMessage()} className="bg-black hover:bg-[#5d5d5d] w-[7vw] h-[11.4vh]">
+                            <svg role="img" xmlns="http://www.w3.org/2000/svg" width="48px" height="48px" viewBox="0 0 24 24" stroke="#fff">
+                                <polygon points="21.368 12.001 3 21.609 3 14 11 12 3 9.794 3 2.394" />
+                            </svg>
+                        </Button>
+                    </div>
+                </>
             ) : ("")}
 
-            <div className="border-t-2 h-[12vh] flex">
-                <Textarea id="textarea" className="text-[#dedede] border-r-2 w-[80%] h-[11.4vh] rounded-none resize-none text-[1.3rem]" placeholder="メッセージを入力..."></Textarea>
-                <label
-                    className="label"
-                    htmlFor="imageId"
-                    style={{
-                        width: "7vw",
-                        height: "11.4vh",
-                        display: "flex",
-                        justifyContent: "center",
-                        alignItems: "center",
-                        cursor: "pointer",
-                        background: "black",
-                    }}
-                    onMouseEnter={(e) => { e.currentTarget.style.background = '#5d5d5d'; }}
-                    onMouseLeave={(e) => { e.currentTarget.style.background = '#000'; }}
-                >
-                    <InputImage ref={fileInputRef} id="imageId" onChange={handleFileChange} />
-                    <svg role="img" xmlns="http://www.w3.org/2000/svg" width="48px" height="48px" viewBox="0 0 24 24" stroke="#fff">
-                        <rect width="18" height="18" x="3" y="3" />
-                        <path d="M3 14l4-4 11 11" />
-                        <circle cx="13.5" cy="7.5" r="2.5" />
-                    </svg>
-                </label>
-
-                <Button onClick={() => SendMessage()} className="bg-black hover:bg-[#5d5d5d] w-[7vw] h-[11.4vh]">
-                    <svg role="img" xmlns="http://www.w3.org/2000/svg" width="48px" height="48px" viewBox="0 0 24 24" stroke="#fff">
-                        <polygon points="21.368 12.001 3 21.609 3 14 11 12 3 9.794 3 2.394" />
-                    </svg>
-                </Button>
-            </div>
         </div>
     );
 }

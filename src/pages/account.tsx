@@ -94,7 +94,7 @@ export default function Account() {
     return (
         <>
             {user ? (
-                <>
+                <div className="bg-black">
                     <Split className="flex h-[100vh] border-2" gutterSize={0} sizes={[10, 90]}>
                         {/** 一つ目のコンポーネント */}
                         <Select />
@@ -179,7 +179,7 @@ export default function Account() {
                             <Button className="mt-[2rem] border-2 border-[#555555]" onClick={logout}>ログアウト</Button>
                         </div>
                     </Split>
-                </>
+                </div>
             ) : (<div>
                 <Split className="flex h-[100vh] border-2" gutterSize={0} sizes={[10, 90]}>
                     {/** 一つ目のコンポーネント */}

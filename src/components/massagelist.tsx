@@ -66,7 +66,7 @@ const List = () => {
 
     return (
         <div className="bg-[#000000] p-2 w-full">
-            <p className="text-[30px] font-bold text-center mb-[5rem]">DM</p>
+            <p className="text-[30px] font-bold text-center mb-[5rem] text-[#fff]">DM</p>
             {loading ? (
                 <p className="text-white text-center">Loading...</p>
             ) : (

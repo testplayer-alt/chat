@@ -139,8 +139,8 @@ export default function Match() {
                                     <div className=" text-center flex w-[30rem] m-auto p-2 border-2 mb-1">
                                         <img className="rounded-full w-[3.5rem] h-auto" src={user.icon} alt="アイコン" />
                                         <div className="block mt-[0.2rem]">
-                                            <p className=" font-bold">{user.name}</p>
-                                            <p className="text-[#d6d6d6]">{user.instant}</p>
+                                            <p className="text-left font-bold">{user.name}</p>
+                                            <p className="text-left text-[#d6d6d6]">{user.instant}</p>
                                         </div>
                                         <Button onClick={() => CreateRoom(user.id)} className="border-2 border-[#6f6f6f] ml-auto mr-0 mt-[0.5rem]">メッセージを送信</Button>
                                     </div>

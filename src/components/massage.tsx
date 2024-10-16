@@ -242,7 +242,7 @@ export default function Message() {
             ) : ("")}
 
             <div className="border-t-2 h-[12vh] flex">
-                <Textarea id="textarea" className="border-r-2 w-[80%] h-[11.4vh] rounded-none resize-none text-[1.3rem]" placeholder="メッセージを入力..."></Textarea>
+                <Textarea id="textarea" className="text-[#dedede] border-r-2 w-[80%] h-[11.4vh] rounded-none resize-none text-[1.3rem]" placeholder="メッセージを入力..."></Textarea>
                 <label
                     className="label"
                     htmlFor="imageId"
